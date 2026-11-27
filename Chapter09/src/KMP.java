@@ -5,7 +5,7 @@ import java.util.Arrays;
 public class KMP {
 
 	// lps[q]: length of the longest proper prefix of p[0..q] that is also a suffix of it
-	static int[] buildLps(String p) {
+	static int[] computeLPS(String p) {
 		int m = p.length(), k = 0;
 		int[] lps = new int[m];
 		for (int q = 1; q < m; q++) {
@@ -21,7 +21,7 @@ public class KMP {
 
 	static int kmpSearch(String t, String p) {
 		int n = t.length(), m = p.length();
-		int[] lps = buildLps(p);
+		int[] lps = computeLPS(p);
 		int q = 0;  // matched length
 		for (int i = 0; i < n; i++) {
 			while (q > 0 &&
@@ -36,8 +36,8 @@ public class KMP {
 	}
 
 	public static void main(String[] args) {
-		System.out.println(Arrays.toString(buildLps("ACABACACD")));  // [0, 0, 1, 0, 1, 2, 3, 2, 0]
-		System.out.println(Arrays.toString(buildLps("ababd")));      // [0, 0, 1, 2, 0]
+		System.out.println(Arrays.toString(computeLPS("ACABACACD")));  // [0, 0, 1, 0, 1, 2, 3, 2, 0]
+		System.out.println(Arrays.toString(computeLPS("ababd")));      // [0, 0, 1, 2, 0]
 		System.out.println(kmpSearch("ababcababcabababd", "ababd")); // 12
 	}
 }

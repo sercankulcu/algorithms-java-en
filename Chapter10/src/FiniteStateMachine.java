@@ -2,11 +2,11 @@
 // Time O(n), no backtracking. Alphabet {0, 1}.
 public class FiniteStateMachine {
 
-	static boolean accepts(int[][] next, boolean[] accept,
+	static boolean accepts(int[][] delta, boolean[] accept,
 			String s) {
 		int state = 0;                     // start state
 		for (char c : s.toCharArray())
-			state = next[state][c - '0'];    // single step
+			state = delta[state][c - '0'];    // single step
 		return accept[state];              // is the final state accepting?
 	}
 

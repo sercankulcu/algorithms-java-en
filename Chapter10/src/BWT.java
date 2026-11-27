@@ -16,21 +16,21 @@ public class BWT {
 		return L.toString();
 	}
 
-	static String inverseBwt(String L) {   // with $
+	static String inverseBWT(String L) {   // with $
 		int n = L.length();
-		int[] occ = new int[n];
-		int[] count = new int[256];
+		int[] rank = new int[n];
+		int[] cnt = new int[256];
 		int[] C = new int[256];
 		for (int i = 0; i < n; i++)
-			occ[i] = count[L.charAt(i)]++;
+			rank[i] = cnt[L.charAt(i)]++;
 		for (int c = 1; c < 256; c++)
-			C[c] = C[c - 1] + count[c - 1];
+			C[c] = C[c - 1] + cnt[c - 1];
 		StringBuilder s = new StringBuilder();
 		int i = 0;                   // the $ row
 		for (int k = 0; k < n - 1; k++) {
 			char c = L.charAt(i);
 			s.insert(0, c);
-			i = C[c] + occ[i];        // LF(i)
+			i = C[c] + rank[i];        // LF(i)
 		}
 		return s.toString();
 	}
@@ -39,7 +39,7 @@ public class BWT {
 		System.out.println(bwt("BANANA"));          // NNBAAA
 		System.out.println(bwt("abraca"));          // caraab
 		System.out.println(bwt("banana$"));         // annb$aa
-		System.out.println(inverseBwt("annb$aa"));  // banana
+		System.out.println(inverseBWT("annb$aa"));  // banana
 	}
 }
 

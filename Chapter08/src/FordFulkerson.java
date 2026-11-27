@@ -3,14 +3,14 @@
 public class FordFulkerson {
 
 	static int V;
-	static int[][] residual;   // residual capacity matrix; capacities at the start, backward edges 0
+	static int[][] res;   // residual capacity matrix; capacities at the start, backward edges 0
 
 	static boolean dfs(int u, int sink,
 					   boolean[] visited, int[] parent) {
 		visited[u] = true;
 		if (u == sink) return true;
 		for (int v = 0; v < V; v++) {
-			if (!visited[v] && residual[u][v] > 0) {
+			if (!visited[v] && res[u][v] > 0) {
 				parent[v] = u;
 				if (dfs(v, sink, visited, parent))
 					return true;
@@ -26,12 +26,12 @@ public class FordFulkerson {
 		while (dfs(source, sink, new boolean[V], parent)) {
 			int delta = Integer.MAX_VALUE;       // smallest residual capacity on the path
 			for (int v = sink; v != source; v = parent[v])
-				delta = Math.min(delta, residual[parent[v]][v]);
+				delta = Math.min(delta, res[parent[v]][v]);
 			StringBuilder path = new StringBuilder();
 			for (int v = sink; v != source; v = parent[v]) {
 				int u = parent[v];
-				residual[u][v] -= delta;
-				residual[v][u] += delta;           // backward edge
+				res[u][v] -= delta;
+				res[v][u] += delta;           // backward edge
 				path.insert(0, " " + names.charAt(v));
 			}
 			maxFlow += delta;
@@ -42,8 +42,8 @@ public class FordFulkerson {
 
 	static void buildNetwork(int vertexCount, int[][] edges) {
 		V = vertexCount;
-		residual = new int[V][V];
-		for (int[] e : edges) residual[e[0]][e[1]] = e[2];
+		res = new int[V][V];
+		for (int[] e : edges) res[e[0]][e[1]] = e[2];
 	}
 
 	public static void main(String[] args) {

@@ -6,12 +6,12 @@ import java.util.List;
 public class Trie {
 
 	public static class TrieNode {
-		TrieNode[] child;  // 'a'..'z'
-		boolean isWord;    // does a word end here?
+		TrieNode[] children;  // 'a'..'z'
+		boolean isEnd;    // does a word end here?
 
 		public TrieNode() {
-			isWord = false;
-			child = new TrieNode[26];
+			isEnd = false;
+			children = new TrieNode[26];
 		}
 	}
 
@@ -21,44 +21,44 @@ public class Trie {
 		TrieNode node = root;
 		for (char ch : word.toCharArray()) {
 			int i = ch - 'a';
-			if (node.child[i] == null)
-				node.child[i] = new TrieNode();
-			node = node.child[i];
+			if (node.children[i] == null)
+				node.children[i] = new TrieNode();
+			node = node.children[i];
 		}
-		node.isWord = true;
+		node.isEnd = true;
 	}
 
 	public boolean search(String word) {
 		TrieNode node = root;
 		for (char ch : word.toCharArray()) {
 			int i = ch - 'a';
-			if (node.child[i] == null)
+			if (node.children[i] == null)
 				return false;
-			node = node.child[i];
+			node = node.children[i];
 		}
-		return node.isWord;
+		return node.isEnd;
 	}
 
 	public boolean startsWith(String prefix) {
 		TrieNode node = root;
 		for (char ch : prefix.toCharArray()) {
 			int i = ch - 'a';
-			if (node.child[i] == null)
+			if (node.children[i] == null)
 				return false;
-			node = node.child[i];
+			node = node.children[i];
 		}
-		return true;  // search: node.isWord
+		return true;  // search: node.isEnd
 	}
 
 	// '.' matches any letter; call: wildcard(root, pattern, 0)
-	boolean wildcard(TrieNode node, String pat, int j) {
-		if (node == null) return false;
-		if (j == pat.length()) return node.isWord;
-		char ch = pat.charAt(j);
+	boolean wildcard(TrieNode d, String s, int j) {
+		if (d == null) return false;
+		if (j == s.length()) return d.isEnd;
+		char ch = s.charAt(j);
 		if (ch != '.')
-			return wildcard(node.child[ch - 'a'], pat, j + 1);
+			return wildcard(d.children[ch - 'a'], s, j + 1);
 		for (int i = 0; i < 26; i++)
-			if (wildcard(node.child[i], pat, j + 1)) return true;
+			if (wildcard(d.children[i], s, j + 1)) return true;
 		return false;
 	}
 
@@ -66,7 +66,7 @@ public class Trie {
 	TrieNode findNode(String prefix) {
 		TrieNode node = root;
 		for (char ch : prefix.toCharArray()) {
-			node = node.child[ch - 'a'];
+			node = node.children[ch - 'a'];
 			if (node == null) return null;
 		}
 		return node;
@@ -74,57 +74,57 @@ public class Trie {
 
 	List<String> complete(String prefix) {
 		List<String> result = new ArrayList<>();
-		TrieNode node = findNode(prefix);
-		if (node != null)
-			collect(node, new StringBuilder(prefix), result);
+		TrieNode d = findNode(prefix);
+		if (d != null)
+			collect(d, new StringBuilder(prefix), result);
 		return result;
 	}
 
-	void collect(TrieNode node, StringBuilder path,
+	void collect(TrieNode d, StringBuilder path,
 			List<String> result) {
-		if (node.isWord) result.add(path.toString());
+		if (d.isEnd) result.add(path.toString());
 		for (int i = 0; i < 26; i++)
-			if (node.child[i] != null) {
+			if (d.children[i] != null) {
 				path.append((char) ('a' + i));
-				collect(node.child[i], path, result);
+				collect(d.children[i], path, result);
 				path.setLength(path.length() - 1);
 			}
 	}
 
 	String longestCommonPrefix() {
 		StringBuilder sb = new StringBuilder();
-		TrieNode node = root;
-		while (!node.isWord) {
-			int only = -1, kids = 0;
+		TrieNode d = root;
+		while (!d.isEnd) {
+			int only = -1, count = 0;
 			for (int i = 0; i < 26; i++)
-				if (node.child[i] != null) { kids++; only = i; }
-			if (kids != 1) break;  // branch or leaf
+				if (d.children[i] != null) { count++; only = i; }
+			if (count != 1) break;  // branch or leaf
 			sb.append((char) ('a' + only));
-			node = node.child[only];
+			d = d.children[only];
 		}
 		return sb.toString();
 	}
 
 	// are all 26 children null? O(M)
-	boolean isEmpty(TrieNode node) {
-		for (TrieNode c : node.child)
+	boolean isEmpty(TrieNode d) {
+		for (TrieNode c : d.children)
 			if (c != null) return false;
 		return true;
 	}
 
-	// true: the parent can delete node; call: delete(root, word, 0)
-	boolean delete(TrieNode node, String word, int j) {
-		if (j == word.length()) {        // word ended
-			if (!node.isWord) return false;
-			node.isWord = false;
-			return isEmpty(node);          // no children?
+	// true: the parent can delete d; call: delete(root, word, 0)
+	boolean delete(TrieNode d, String k, int j) {
+		if (j == k.length()) {        // word ended
+			if (!d.isEnd) return false;
+			d.isEnd = false;
+			return isEmpty(d);          // no children?
 		}
-		int i = word.charAt(j) - 'a';
-		TrieNode c = node.child[i];
+		int i = k.charAt(j) - 'a';
+		TrieNode c = d.children[i];
 		if (c == null) return false;     // word not present
-		if (delete(c, word, j + 1)) {
-			node.child[i] = null;          // remove the child
-			return !node.isWord && isEmpty(node);
+		if (delete(c, k, j + 1)) {
+			d.children[i] = null;          // remove the child
+			return !d.isEnd && isEmpty(d);
 		}
 		return false;
 	}

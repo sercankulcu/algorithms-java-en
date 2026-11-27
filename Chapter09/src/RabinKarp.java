@@ -3,7 +3,7 @@
 public class RabinKarp {
 
 	// is t[s..s+m-1] == p? (exact check after the hashes are equal)
-	static boolean matchesAt(String t, String p, int s) {
+	static boolean matchAt(String t, String p, int s) {
 		for (int j = 0; j < p.length(); j++)
 			if (t.charAt(s + j) != p.charAt(j)) return false;
 		return true;
@@ -20,7 +20,7 @@ public class RabinKarp {
 			th = (B * th + t.charAt(i)) % Q;
 		}
 		for (int s = 0; s <= n - m; s++) {
-			if (ph == th && matchesAt(t, p, s))
+			if (ph == th && matchAt(t, p, s))
 				return s;
 			if (s < n - m) {
 				th = (B * (th - t.charAt(s) * h)

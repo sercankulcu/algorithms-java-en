@@ -29,14 +29,14 @@ public class TernarySearchTrie {
 	}
 
 	boolean search(String s) {
-		TstNode node = root;
+		TstNode d = root;
 		int i = 0;
-		while (node != null) {
+		while (d != null) {
 			char ch = s.charAt(i);
-			if (ch < node.c) node = node.left;
-			else if (ch > node.c) node = node.right;
-			else if (i == s.length() - 1) return node.end;
-			else { node = node.mid; i++; }
+			if (ch < d.c) d = d.left;
+			else if (ch > d.c) d = d.right;
+			else if (i == s.length() - 1) return d.end;
+			else { d = d.mid; i++; }
 		}
 		return false;
 	}

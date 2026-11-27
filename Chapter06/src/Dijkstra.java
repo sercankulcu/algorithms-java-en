@@ -19,15 +19,15 @@ public class Dijkstra {
 	static List<List<Edge>> adj;
 	static int[] lastDist, lastPrev;       // added to carry the result to main
 
-	static void dijkstra(int source) {
+	static void dijkstra(int src) {
 		int[] dist = new int[V + 1];
 		int[] prev = new int[V + 1];
 		boolean[] visited = new boolean[V + 1];
 		Arrays.fill(dist, INF);
-		dist[source] = 0;
+		dist[src] = 0;
 		PriorityQueue<int[]> pq =
 			new PriorityQueue<>((a, b) -> a[1] - b[1]);
-		pq.add(new int[] { source, 0 });
+		pq.add(new int[] { src, 0 });
 		while (!pq.isEmpty()) {
 			int u = pq.poll()[0];
 			if (visited[u]) continue; // stale entry
@@ -46,14 +46,14 @@ public class Dijkstra {
 	}
 
 	static void printPath(int[] prev, int[] dist,
-						  int source, int target) {
+						  int src, int target) {
 		if (dist[target] == INF) {   // unreachable
 			System.out.print("no path"); return;
 		}
 		Deque<Integer> stack = new ArrayDeque<>();
-		for (int v = target; v != source; v = prev[v])
+		for (int v = target; v != src; v = prev[v])
 			stack.push(v);         // from the target back
-		stack.push(source);
+		stack.push(src);
 		while (!stack.isEmpty())
 			System.out.print(stack.pop() + " ");
 	}

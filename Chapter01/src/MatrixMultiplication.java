@@ -10,10 +10,10 @@ public class MatrixMultiplication {
 		int[][] result = new int[n][m];
 		for (int i = 0; i < n; i++)
 			for (int j = 0; j < m; j++) {
-				int entry = 0;
+				int sum = 0;
 				for (int k = 0; k < p; k++)
-					entry += A[i][k] * B[k][j];
-				result[i][j] = entry;
+					sum += A[i][k] * B[k][j];
+				result[i][j] = sum;
 			}
 		return result;
 	}

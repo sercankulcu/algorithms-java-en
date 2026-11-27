@@ -14,20 +14,20 @@ public class RadixSort {
 	static void lsdSort(String[] a) {
 		int W = maxLen(a);               // longest string
 		for (int d = W - 1; d >= 0; d--)
-			countingSort(a, d);            // right to left
+			countSort(a, d);            // right to left
 	}
 
-	static void countingSort(String[] a, int d) {
-		int[] count = new int[256];      // ASCII
-		for (String s : a) count[key(s, d)]++;
-		for (int r = 1; r < 256; r++) count[r] += count[r - 1];
-		String[] tmp = new String[a.length];
+	static void countSort(String[] a, int d) {
+		int[] cnt = new int[256];      // ASCII
+		for (String s : a) cnt[ch(s, d)]++;
+		for (int r = 1; r < 256; r++) cnt[r] += cnt[r - 1];
+		String[] aux = new String[a.length];
 		for (int i = a.length - 1; i >= 0; i--)   // stable
-			tmp[--count[key(a[i], d)]] = a[i];
-		System.arraycopy(tmp, 0, a, 0, a.length);
+			aux[--cnt[ch(a[i], d)]] = a[i];
+		System.arraycopy(aux, 0, a, 0, a.length);
 	}
 
-	static int key(String s, int d) {         // short string -> 0
+	static int ch(String s, int d) {         // short string -> 0
 		return d < s.length() ? s.charAt(d) : 0;
 	}
 

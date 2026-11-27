@@ -16,12 +16,12 @@ public class BellmanFord {
 	static List<Edge> edges;
 	static int[] lastDist;   // added to carry the result to main
 
-	static void bellmanFord(int source) {
+	static void bellmanFord(int src) {
 		int[] dist = new int[V];
 		int[] prev = new int[V];
 		lastDist = dist;                          // added
 		Arrays.fill(dist, INF);
-		dist[source] = 0;
+		dist[src] = 0;
 		for (int i = 1; i < V; i++) {
 			for (Edge e : edges) {
 				int u = e.from, v = e.to, w = e.weight;

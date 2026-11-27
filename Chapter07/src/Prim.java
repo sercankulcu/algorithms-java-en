@@ -13,7 +13,7 @@ public class Prim {
 	}
 
 	static final int INF = Integer.MAX_VALUE;
-	static int[] lastParent;      // added to carry the result of prim(G, source) to main
+	static int[] lastParent;      // added to carry the result of prim(G, src) to main
 
 	// Among the vertices not in the tree, the one with the smallest key (the smaller index on a tie)
 	static int minKey(int[] key, boolean[] inTree) {
@@ -26,14 +26,14 @@ public class Prim {
 		return u;
 	}
 
-	static void prim(int[][] G, int source) {
+	static void prim(int[][] G, int src) {
 		int V = G.length;
 		int[] key = new int[V];
 		int[] parent = new int[V];
 		boolean[] inTree = new boolean[V];
 		Arrays.fill(key, Integer.MAX_VALUE);
-		key[source] = 0;
-		parent[source] = -1;
+		key[src] = 0;
+		parent[src] = -1;
 		for (int s = 0; s < V - 1; s++) {
 			int u = minKey(key, inTree);
 			inTree[u] = true;
@@ -52,12 +52,12 @@ public class Prim {
 	static int[] key, parent;
 	static boolean[] inTree;
 
-	static void primPQ(int source) {
+	static void primPQ(int src) {
 		Arrays.fill(key, INF);
-		key[source] = 0;
+		key[src] = 0;
 		PriorityQueue<int[]> pq =
 				new PriorityQueue<>((a, b) -> a[1] - b[1]);
-		pq.add(new int[] { source, 0 });
+		pq.add(new int[] { src, 0 });
 		while (!pq.isEmpty()) {
 			int u = pq.poll()[0];
 			if (inTree[u]) continue;  // stale

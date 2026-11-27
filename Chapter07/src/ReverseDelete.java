@@ -20,24 +20,24 @@ public class ReverseDelete {
 	}
 
 	// Are all vertices in one component using the remaining edges? (disjoint sets are rebuilt from scratch)
-	static boolean isConnected(int V, List<Edge> edges) {
+	static boolean isConnected(int V, List<Edge> es) {
 		int[] parent = new int[V];
 		for (int i = 0; i < V; i++) parent[i] = i;
 		int components = V;
-		for (Edge e : edges) {
+		for (Edge e : es) {
 			int x = find(parent, e.u), y = find(parent, e.v);
 			if (x != y) { parent[x] = y; components--; }
 		}
 		return components == 1;
 	}
 
-	static void reverseDelete(int V, List<Edge> edges) {
-		edges.sort((a, b) -> b.w - a.w); // descending
+	static void reverseDelete(int V, List<Edge> es) {
+		es.sort((a, b) -> b.w - a.w); // descending
 		int i = 0;
-		while (i < edges.size()) {
-			Edge e = edges.remove(i);     // delete tentatively
-			if (!isConnected(V, edges)) {
-				edges.add(i, e);            // put back
+		while (i < es.size()) {
+			Edge e = es.remove(i);     // delete tentatively
+			if (!isConnected(V, es)) {
+				es.add(i, e);            // put back
 				i++;
 			}
 		}

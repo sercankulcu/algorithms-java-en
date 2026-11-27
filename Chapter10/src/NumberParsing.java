@@ -5,23 +5,23 @@ public class NumberParsing {
 	enum State { START, DIGIT, DECIMAL }
 
 	static void findNumbers(String s) {
-		State st = State.START;
+		State d = State.START;
 		StringBuilder buf = new StringBuilder();
 		for (char c : s.toCharArray()) {
 			boolean digit = Character.isDigit(c);
 			if (digit) {
-				if (st == State.START) st = State.DIGIT;
+				if (d == State.START) d = State.DIGIT;
 				buf.append(c);
-			} else if (c == '.' && st != State.DECIMAL) {
-				st = State.DECIMAL;
+			} else if (c == '.' && d != State.DECIMAL) {
+				d = State.DECIMAL;
 				buf.append(c);
-			} else if (st != State.START) {  // number ended
+			} else if (d != State.START) {  // number ended
 				System.out.println(buf);
 				buf.setLength(0);
-				st = State.START;
+				d = State.START;
 			}
 		}
-		if (st != State.START) System.out.println(buf);
+		if (d != State.START) System.out.println(buf);
 	}
 
 	public static void main(String[] args) {

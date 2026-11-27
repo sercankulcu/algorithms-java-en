@@ -8,18 +8,18 @@ public class RadixSort {
 		if (arr.length == 0) return arr;
 		int max = Arrays.stream(arr).max().getAsInt();
 		for (long exp = 1; max / exp > 0; exp *= 10)
-			arr = countingSortByDigit(arr, (int) exp);
+			arr = countByDigit(arr, (int) exp);
 		return arr;
 	}
 
-	static int[] countingSortByDigit(int[] arr, int exp) {
+	static int[] countByDigit(int[] arr, int exp) {
 		int n = arr.length;
 		int[] output = new int[n], count = new int[10];
 		for (int x : arr) count[(x / exp) % 10]++;
 		for (int i = 1; i < 10; i++) count[i] += count[i - 1];
 		for (int i = n - 1; i >= 0; i--) {
-			int d = (arr[i] / exp) % 10;
-			output[--count[d]] = arr[i];
+			int b = (arr[i] / exp) % 10;
+			output[--count[b]] = arr[i];
 		}
 		return output;
 	}
@@ -30,7 +30,7 @@ public class RadixSort {
 		// [2, 24, 45, 66, 75, 90, 170, 802]
 
 		int[] d = {32, 15, 41, 23, 11};
-		System.out.println(Arrays.toString(countingSortByDigit(d, 1)));   // [41, 11, 32, 23, 15]
+		System.out.println(Arrays.toString(countByDigit(d, 1)));   // [41, 11, 32, 23, 15]
 	}
 }
 

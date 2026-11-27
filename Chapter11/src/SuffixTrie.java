@@ -3,21 +3,21 @@
 public class SuffixTrie {
 
 	static class TrieNode {
-		TrieNode[] child = new TrieNode[26];  // 'a'..'z'
-		boolean isWord;                       // does a suffix end here?
+		TrieNode[] children = new TrieNode[26];  // 'a'..'z'
+		boolean isEnd;                       // does a suffix end here?
 	}
 
 	static TrieNode suffixTrie(String t) {
 		TrieNode root = new TrieNode();
 		for (int s = 0; s < t.length(); s++) {
-			TrieNode node = root;
+			TrieNode d = root;
 			for (int j = s; j < t.length(); j++) {
 				int i = t.charAt(j) - 'a';
-				if (node.child[i] == null)
-					node.child[i] = new TrieNode();
-				node = node.child[i];
+				if (d.children[i] == null)
+					d.children[i] = new TrieNode();
+				d = d.children[i];
 			}
-			node.isWord = true;  // suffix ends
+			d.isEnd = true;  // suffix ends
 		}
 		return root;
 	}
@@ -26,7 +26,7 @@ public class SuffixTrie {
 	static boolean isSubstring(TrieNode root, String p) {
 		TrieNode node = root;
 		for (char ch : p.toCharArray()) {
-			node = node.child[ch - 'a'];
+			node = node.children[ch - 'a'];
 			if (node == null) return false;
 		}
 		return true;
@@ -34,7 +34,7 @@ public class SuffixTrie {
 
 	static int countNodes(TrieNode node) {
 		int count = 1;
-		for (TrieNode c : node.child)
+		for (TrieNode c : node.children)
 			if (c != null) count += countNodes(c);
 		return count;
 	}

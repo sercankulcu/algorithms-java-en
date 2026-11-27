@@ -5,17 +5,17 @@ import java.util.Scanner;
 public class FindAverage {
 
 	public static void main(String[] args) {
-		Scanner input = new Scanner("10 20 45");
+		Scanner in = new Scanner("10 20 45");
 		System.out.println("Enter the first number: ");
-		double number1 = input.nextDouble();
+		double x1 = in.nextDouble();
 		System.out.println("Enter the second number: ");
-		double number2 = input.nextDouble();
+		double x2 = in.nextDouble();
 		System.out.println("Enter the third number: ");
-		double number3 = input.nextDouble();
-		double average = (number1 + number2 + number3) / 3;
+		double x3 = in.nextDouble();
+		double avg = (x1 + x2 + x3) / 3;
 		System.out.println("Average of the numbers: "
-				+ average);              // 25.0
-		input.close();
+				+ avg);              // 25.0
+		in.close();
 	}
 }
 

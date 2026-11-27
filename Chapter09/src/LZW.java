@@ -10,7 +10,7 @@ import java.util.TreeSet;
 public class LZW {
 
 	// Initial dictionary for the compressor: the characters of the text in alphabetical order (A=0, B=1, C=2)
-	static Map<String, Integer> initialDict(String s) {
+	static Map<String, Integer> initDict(String s) {
 		Map<String, Integer> dict = new HashMap<>();
 		TreeSet<Character> letters = new TreeSet<>();
 		for (char c : s.toCharArray()) letters.add(c);
@@ -19,7 +19,7 @@ public class LZW {
 	}
 
 	// Initial dictionary for the decompressor: 0..255 ASCII
-	static List<String> initialDict() {
+	static List<String> initDict() {
 		List<String> dict = new ArrayList<>();
 		for (int i = 0; i < 256; i++) dict.add("" + (char) i);
 		return dict;
@@ -27,7 +27,7 @@ public class LZW {
 
 	static List<Integer> lzw(String s) {
 		Map<String, Integer> dict =
-			initialDict(s);  // A=0, B=1, C=2
+			initDict(s);  // A=0, B=1, C=2
 		String w = "";
 		List<Integer> codes = new ArrayList<>();
 		for (char c : s.toCharArray()) {
@@ -47,7 +47,7 @@ public class LZW {
 
 	static String lzwDecode(List<Integer> codes) {
 		List<String> dict =
-			initialDict();      // 0..255: byte values
+			initDict();      // 0..255: byte values
 		String w = dict.get(codes.get(0));
 		StringBuilder s = new StringBuilder(w);
 		for (int i = 1; i < codes.size(); i++) {

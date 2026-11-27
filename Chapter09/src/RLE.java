@@ -2,7 +2,7 @@
 // Time O(n): every character is read once.
 public class RLE {
 
-	static String rleEncode(String s) {
+	static String rleCompress(String s) {
 		StringBuilder result = new StringBuilder();
 		int n = s.length();
 		for (int i = 0; i < n; i++) {
@@ -19,8 +19,8 @@ public class RLE {
 	}
 
 	public static void main(String[] args) {
-		System.out.println(rleEncode("AAAAABBBCCCCDDD"));  // 5A3B4C3D
-		System.out.println(rleEncode("AAAAABB"));          // 5A2B
+		System.out.println(rleCompress("AAAAABBBCCCCDDD"));  // 5A3B4C3D
+		System.out.println(rleCompress("AAAAABB"));          // 5A2B
 	}
 }
 

@@ -3,7 +3,7 @@
 public class BinaryTrie {
 
 	static class BitNode {
-		BitNode[] child = new BitNode[2];  // '0', '1'
+		BitNode[] children = new BitNode[2];  // '0', '1'
 		String route;                      // route attached to this prefix (null if none)
 	}
 
@@ -14,21 +14,21 @@ public class BinaryTrie {
 		BitNode node = root;
 		for (char b : prefix.toCharArray()) {
 			int i = b - '0';
-			if (node.child[i] == null) node.child[i] = new BitNode();
-			node = node.child[i];
+			if (node.children[i] == null) node.children[i] = new BitNode();
+			node = node.children[i];
 		}
 		node.route = route;
 	}
 
 	String longestMatch(String addr) {
-		BitNode node = root;
+		BitNode d = root;
 		String best = null;
 		for (int k = 0; k < addr.length(); k++) {
-			if (node.route != null) best = node.route;  // longer prefix
-			node = node.child[addr.charAt(k) - '0'];
-			if (node == null) return best;
+			if (d.route != null) best = d.route;  // longer prefix
+			d = d.children[addr.charAt(k) - '0'];
+			if (d == null) return best;
 		}
-		return node.route != null ? node.route : best;
+		return d.route != null ? d.route : best;
 	}
 
 	public static void main(String[] args) {

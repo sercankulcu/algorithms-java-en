@@ -21,14 +21,14 @@ public class Kruskal {
 		return parent[i];
 	}
 
-	static void kruskal(int V, List<Edge> edges) {
-		Collections.sort(edges);      // ascending
+	static void kruskal(int V, List<Edge> es) {
+		Collections.sort(es);      // ascending
 		int[] parent = new int[V + 1];
 		for (int i = 1; i <= V; i++) parent[i] = i;
 		List<Edge> tree = new ArrayList<>();
 		int k = 0;
 		while (tree.size() < V - 1) {
-			Edge e = edges.get(k++);
+			Edge e = es.get(k++);
 			int x = find(parent, e.u);
 			int y = find(parent, e.v);
 			if (x != y) {               // different trees

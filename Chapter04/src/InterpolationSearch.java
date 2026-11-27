@@ -4,15 +4,15 @@ public class InterpolationSearch {
 
 	static int interpolationSearch(int[] arr, int n,
 								   int target) {
-		int low = 0, high = n - 1;
-		while (low <= high && target >= arr[low]
-						   && target <= arr[high]) {
-			if (arr[high] == arr[low]) return low; // division by 0
-			long num = (long) (target - arr[low]) * (high - low);
-			int index = low + (int) (num / (arr[high] - arr[low]));
-			if (arr[index] == target) return index;
-			if (arr[index] < target) low = index + 1;
-			else high = index - 1;
+		int lo = 0, hi = n - 1;
+		while (lo <= hi && target >= arr[lo]
+						   && target <= arr[hi]) {
+			if (arr[hi] == arr[lo]) return lo; // division by 0
+			long num = (long) (target - arr[lo]) * (hi - lo);
+			int idx = lo + (int) (num / (arr[hi] - arr[lo]));
+			if (arr[idx] == target) return idx;
+			if (arr[idx] < target) lo = idx + 1;
+			else hi = idx - 1;
 		}
 		return -1;
 	}

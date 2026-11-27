@@ -23,9 +23,9 @@ public class TimeComplexity {
 		if (arr.length == 0)
 			return null;            // empty array
 		int max = arr[0];
-		for (int element : arr)
-			if (element > max)
-				max = element;
+		for (int x : arr)
+			if (x > max)
+				max = x;
 		return max;
 	}
 

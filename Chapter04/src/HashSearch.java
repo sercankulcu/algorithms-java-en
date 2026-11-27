@@ -5,27 +5,27 @@ public class HashSearch {
 	static int hash(String key,
 					int m) {
 		int sum = 0;
-		for (char c : key.toCharArray())
-			sum += c;           // Unicode code
+		for (char k : key.toCharArray())
+			sum += k;           // Unicode code
 		return sum % m;       // m: table size
 	}
 
 	// Helper: insertion with linear probing (while the table is not full)
 	static void hashInsert(Integer[] table, int key) {
 		int m = table.length;     // m > 0
-		int index = Math.floorMod(key, m);
-		while (table[index] != null)
-			index = (index + 1) % m;
-		table[index] = key;
+		int idx = Math.floorMod(key, m);
+		while (table[idx] != null)
+			idx = (idx + 1) % m;
+		table[idx] = key;
 	}
 
 	static int hashSearch(Integer[] table, int key) {
 		int m = table.length;     // m > 0
-		int index = Math.floorMod(key, m);   // hash
-		while (table[index] != null) {
-			if (table[index] == key)
-				return index;          // found
-			index = (index + 1) % m; // next bucket
+		int idx = Math.floorMod(key, m);   // hash
+		while (table[idx] != null) {
+			if (table[idx] == key)
+				return idx;          // found
+			idx = (idx + 1) % m; // next bucket
 		}
 		return -1;                 // empty bucket: not present
 	}

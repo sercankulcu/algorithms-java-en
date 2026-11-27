@@ -24,25 +24,25 @@ public class Boruvka {
 		int[] parent = new int[V];
 		for (int i = 0; i < V; i++) parent[i] = i;
 		List<Edge> tree = new ArrayList<>();
-		int componentCount = V;
-		while (componentCount > 1) {
+		int numComp = V;
+		while (numComp > 1) {
 			Edge[] cheapest = new Edge[V];
 			for (Edge e : edges) {            // 1) find the cheapest edges
-				int r1 = find(parent, e.u), r2 = find(parent, e.v);
-				if (r1 == r2) continue;         // same component
-				if (cheapest[r1] == null || e.w < cheapest[r1].w)
-					cheapest[r1] = e;
-				if (cheapest[r2] == null || e.w < cheapest[r2].w)
-					cheapest[r2] = e;
+				int k1 = find(parent, e.u), k2 = find(parent, e.v);
+				if (k1 == k2) continue;         // same component
+				if (cheapest[k1] == null || e.w < cheapest[k1].w)
+					cheapest[k1] = e;
+				if (cheapest[k2] == null || e.w < cheapest[k2].w)
+					cheapest[k2] = e;
 			}
 			boolean added = false;
 			for (Edge e : cheapest) {         // 2) add them all
 				if (e == null) continue;
-				int r1 = find(parent, e.u), r2 = find(parent, e.v);
-				if (r1 == r2) continue;         // already added
+				int k1 = find(parent, e.u), k2 = find(parent, e.v);
+				if (k1 == k2) continue;         // already added
 				tree.add(e);
-				parent[r1] = r2;                // union
-				componentCount--;
+				parent[k1] = k2;                // union
+				numComp--;
 				added = true;
 			}
 			if (!added) break;  // forest
